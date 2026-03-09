@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AnalysisResult {
+  id               String    @id @default(cuid())
+  username         String    @unique
+  displayName      String?
+  bio              String?
+  profileImage     String?
+  verified         Boolean   @default(false)
+  joinedAt         DateTime?
+  followersCount   Int       @default(0)
+  followingCount   Int       @default(0)
+  tweetCount       Int       @default(0)
+  likeCount        Int       @default(0)
+  originalTweetPct Float     @default(0)
+  replyPct         Float     @default(0)
+  retweetPct       Float     @default(0)
+  quotePct         Float     @default(0)
+  activityScore    Float     @default(0)
+  engagementRate   Float     @default(0)
+  hatLevel         Int       @default(1)
+  hatTitle         String    @default("PHANTOM HAT")
+  hatEmoji         String    @default("🎩")
+  aiAnalysis       String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  lastFetchedAt    DateTime  @default(now())
+
+  @@index([username])
+  @@index([hatLevel])
+}
